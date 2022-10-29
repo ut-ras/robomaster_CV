@@ -2,6 +2,7 @@ import cv2
 import os
 import youtube_dl
 import sys
+import numpy as np
 
 videos = [
     # {
@@ -54,7 +55,7 @@ def downloadAll(refreshAll=False):
 def imagefeed(cvfunction):
     print("here for now")
 
-def videofeed(cvfunction, file=None):
+def videofeed(cvfunction, file=None, sidebyside=False):
     play = False
 
     def feedfile(filename):
@@ -66,7 +67,21 @@ def videofeed(cvfunction, file=None):
             success,frame = video.read()
             if success:
                 image = cvfunction(frame)
-                cv2.imshow("Image", image)
+                if sidebyside:
+
+                    original_shape = frame.shape
+                    augmented_shape = image.shape
+
+                    if (original_shape[0] > augmented_shape[0]):
+                        image.resize(original_shape[0],augmented_shape[1],augmented_shape[2])
+                    elif (augmented_shape[0] > original_shape[0]):
+                        image.resize(augmented_shape[0],original_shape[1],original_shape[2])
+                    
+                    THEsidebyside = np.concatenate((frame, image), axis=1)
+
+                    cv2.imshow("CVideos", THEsidebyside)
+                else:
+                    cv2.imshow("CVideos", image)
             else:
                 return
             key = cv2.waitKey(60 if play else 0)
