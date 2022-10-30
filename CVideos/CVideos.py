@@ -21,6 +21,18 @@ videos = [
         "link": "https://github.com/uw-advanced-robotics/aruw-vision-platform-2019/raw/master/.github/ohio48-opt.gif",
         "filename": "competition_gif2"
     },
+    {
+        "link": "https://github.com/TAMU-Robomasters/cv_main/raw/master/data/short_clip.mp4",
+        "filename": "TAMU_short_clip"
+    },
+    {
+        "link": "https://github.com/TAMU-Robomasters/cv_main/raw/master/data/test_video.mp4",
+        "filename": "TAMU_test_video"
+    },
+    {
+        "link": "https://github.com/TAMU-Robomasters/cv_main/raw/master/data/test.avi",
+        "filename": "TAMU_game_footage"
+    },
     # {
     #     "link": "link to video",
     #     "filename": "file name to save video to"
