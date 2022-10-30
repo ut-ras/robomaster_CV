@@ -14,6 +14,8 @@ The program automatically downloads some test videos, but you can add more by pl
 ## Controls
 ### Space
 play/pause
+### Return
+next video
 ### Any other key
 next frame
 

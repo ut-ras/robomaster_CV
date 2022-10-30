@@ -87,6 +87,8 @@ def videofeed(cvfunction, file=None, sidebyside=False):
             key = cv2.waitKey(60 if play else 0)
             if key == ord(' '):
                 play = not play
+            if key == 13: # return key
+                return
 
     if not file:
         for filename in os.listdir(folder):
