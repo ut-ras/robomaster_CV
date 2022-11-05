@@ -24,3 +24,8 @@ next frame
 If you just want to play one file, you can specify using this parameter. Include the file extension and make sure the video is in the CVideos folder (ex: ```videofeed(exampleFunction,file=filename)```)
 ### ```sidebyside``` 
 To place your augmented frame next to the orginal frame, set sidebyside to True. (ex: ```videofeed(exampleFunction,sidebyside=True)```)
+
+## ToDo:
+### Better/full example of code in use (create a contrast with how it was done before with while loops)
+### pip install line added (requirements install as well)
+### go back functionality
