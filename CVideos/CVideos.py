@@ -74,31 +74,42 @@ def videofeed(cvfunction, file=None, sidebyside=False):
         nonlocal play
 
         video = cv2.VideoCapture(folder+"/"+filename)
-    
+        fps = video.get(cv2.CAP_PROP_FPS)
+        delay = int((1/int(fps)) * 1000)
+        frames = []
+        frameIndex = 0
+
         while True:
-            success,frame = video.read()
-            if success:
-                image = cvfunction(frame)
-                if sidebyside:
+            if len(frames) <= frameIndex:
+                success,frame = video.read()
+                if success:
+                    image = cvfunction(frame)
+                    if sidebyside:
 
-                    original_shape = frame.shape
-                    augmented_shape = image.shape
+                        original_shape = frame.shape
+                        augmented_shape = image.shape
 
-                    if (original_shape[0] > augmented_shape[0]):
-                        image.resize(original_shape[0],augmented_shape[1],augmented_shape[2])
-                    elif (augmented_shape[0] > original_shape[0]):
-                        image.resize(augmented_shape[0],original_shape[1],original_shape[2])
-                    
-                    THEsidebyside = np.concatenate((frame, image), axis=1)
+                        if (original_shape[0] > augmented_shape[0]):
+                            image.resize(original_shape[0],augmented_shape[1],augmented_shape[2])
+                        elif (augmented_shape[0] > original_shape[0]):
+                            image.resize(augmented_shape[0],original_shape[1],original_shape[2])
+                        
+                        THEsidebyside = np.concatenate((frame, image), axis=1)
 
-                    cv2.imshow("CVideos", THEsidebyside)
+                        frames.append(THEsidebyside)
+                    else:
+                        frames.append(image)
                 else:
-                    cv2.imshow("CVideos", image)
-            else:
-                return
-            key = cv2.waitKey(60 if play else 0)
-            if key == ord(' '):
+                    return
+            frameIndex = max(0, frameIndex)
+            cv2.imshow("CVideos", frames[frameIndex])
+            key = cv2.waitKey(delay if play else 0)
+            if key == ord(' '): # play pause
                 play = not play
+            if key == 2: # back arrow
+                frameIndex -= 1
+            else:
+                frameIndex += 1
             if key == 13: # return key
                 return
 
@@ -107,6 +118,5 @@ def videofeed(cvfunction, file=None, sidebyside=False):
             feedfile(filename)
     else:
         feedfile(file)
-
 
 downloadAll()
